@@ -26,13 +26,18 @@ root.iconphoto(False, icon)
 
 
 label = Label(text="Hello, it is 2024!") # создаем текстовую метку
-field_text = ""
-for x in field:
-    field_text = field_text + '\n' + str(x)
-label_field = Label(text=field_text)
+
+def form_field(field=field):
+    field_text = ""
+    for x in field:
+        field_text = field_text + '\n' + str(x)
+    return field_text
+    
+field_text = StringVar(value=form_field())
+label_field = Label(textvariable=field_text)
+
 
 def click_button_right(_field = field):
-    print(_field)
     for i,x in enumerate(_field):
         print(x)
         x.reverse()
@@ -42,7 +47,9 @@ def click_button_right(_field = field):
                 x[ii] = x[ii]*2
         x.reverse()
         _field[i] = x
+    field_text.set(_field)
     print(_field)
+
     
 btn = ttk.Button(text="Click Me", command=click_button_right)
 
