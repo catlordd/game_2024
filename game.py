@@ -38,7 +38,38 @@ label_field = Label(textvariable=field_text)
 
 
 def click_button_right(_field = field):
-    for i,x in enumerate(_field):
+    count_y = len(_field)
+    count_x = len(_field[0])
+    
+    _y = 0
+    _x = count_x - 1
+    while _y < count_y:
+        if _field[_y][_x] == _field[_y][_x-1]:
+            _field[_y][_x] = _field[_y][_x] * 2
+            for ix in range(_x-1,0,-1):
+                if ix != 0:
+                    _field[_y][ix] = _field[_y][ix-1]
+                else:
+                    _field[_y][ix] = 0
+            _x = _x - 2
+        else:
+            _x = _x - 1 
+    
+    '''for y in range(count_y):
+        stop_see = False
+        for x in range(count_x-1,0,-1):
+            if x != 0 and _field[y][x] ==_field[y][x-1] and stop_see == False:
+                _field[y][x] = _field[y][x]*2
+                stop_see = True
+                for i in range(x-1,0,-1):
+                    if i!=0:
+                       _field[y][i] = _field[y][i-1] 
+                    else:
+                        _field[y][i] = 0
+            else: 
+                stop_see = False'''
+
+    '''for i,x in enumerate(_field):
         print(x)
         x.reverse()
         
@@ -46,8 +77,8 @@ def click_button_right(_field = field):
             if ii < 3 and num == x[ii+1]:
                 x[ii] = x[ii]*2
         x.reverse()
-        _field[i] = x
-    field_text.set(_field)
+        _field[i] = x'''
+    field_text.set(form_field(_field))
     print(_field)
 
     
