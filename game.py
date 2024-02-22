@@ -31,6 +31,7 @@ root.iconphoto(False, icon)
 
 label = Label(text="Hello, it is 2024!") # создаем текстовую метку
 
+# Функция 
 def form_field(field=field):
     field_text = ""
     for x in field:
@@ -171,27 +172,30 @@ def click_button_down(_field = field):
         _y = 0 
     
     # Цикл чтобы сместить все отличные от нуля цифры вверх
-    _y = 0
+    _y = -1
     _x = 0
     while _x < count_x:
-        while _y < count_y:
-            if _y != 0 and _field[_y-1][_x] == 0 and _field[_y][_x] != 0:
-                _field[_y-1][_x] = _field[_y][_x]
+        while _y > (count_y*-1)-1:
+            if _y != -1 and _field[_y+1][_x] == 0 and _field[_y][_x] != 0:
+                _field[_y+1][_x] = _field[_y][_x]
                 _field[_y][_x] = 0
-                _y =_y-1
+                _y =_y+1
             else:
-                _y = _y+1
+                _y =_y-1
         _x = _x + 1
-        _y = 0
+        _y = -1
 
     # Вносим изменения в поле в интерфейсе
     field_text.set(form_field(_field))
     print(_field)        
+
+# Создаем кнопки для перемещения цифр
 btnr = ttk.Button(text="RIGHT", command=click_button_right)
 btnl = ttk.Button(text="LEFT", command=click_button_left)
 btnu = ttk.Button(text="UP", command=click_button_up)
 btnd = ttk.Button(text="DOWN", command=click_button_down)
 
+# Рисуем кнопки на окне
 btnr.pack(side='right')
 btnl.pack(side='left')
 btnu.pack(side='top')
