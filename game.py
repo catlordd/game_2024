@@ -40,7 +40,7 @@ def form_field(field=field):
 field_text = StringVar(value=form_field())
 label_field = Label(textvariable=field_text)
 
-# Функция для суммирования и смещения цифр враво
+# Функция для суммирования и смещения цифр вправо
 def click_button_right(_field = field):
     count_y = len(_field)
     count_x = len(_field[0])
@@ -77,7 +77,7 @@ def click_button_right(_field = field):
     field_text.set(form_field(_field))
     print(_field)
 
-# Функция для суммирования и смещения цифр враво
+# Функция для суммирования и смещения цифр влево
 def click_button_left(_field = field):
     count_y = len(_field)
     count_x = len(_field[0])
@@ -114,7 +114,7 @@ def click_button_left(_field = field):
     field_text.set(form_field(_field))
     print(_field)
 
-# Функция для суммирования и смещения цифр враво
+# Функция для суммирования и смещения цифр вверх
 def click_button_up(_field = field):
     count_y = len(_field)
     count_x = len(_field[0])
@@ -133,7 +133,7 @@ def click_button_up(_field = field):
         _x = _x + 1
         _y = 0 
     
-    # Цикл чтобы сместить все отличные от нуля цифры влево
+    # Цикл чтобы сместить все отличные от нуля цифры вверх
     _y = 0
     _x = 0
     while _x < count_x:
@@ -150,15 +150,52 @@ def click_button_up(_field = field):
     # Вносим изменения в поле в интерфейсе
     field_text.set(form_field(_field))
     print(_field)
-        
+
+# Функция для суммирования и смещения цифр вниз
+def click_button_down(_field = field):
+    count_y = len(_field)
+    count_x = len(_field[0])
+    
+    # Цикл чтобы суммировать одинаковые соседние цифры
+    _y = -1
+    _x = 0
+    while _x < count_x:
+        while _y > count_y*-1:
+            if _y != count_y*-1 and _field[_y][_x] == _field[_y-1][_x] :
+                _field[_y][_x] = _field[_y][_x] * 2
+                _field[_y-1][_x] = 0
+                _y = _y - 2
+            else:
+                _y = _y - 1
+        _x = _x + 1
+        _y = 0 
+    
+    # Цикл чтобы сместить все отличные от нуля цифры вверх
+    _y = 0
+    _x = 0
+    while _x < count_x:
+        while _y < count_y:
+            if _y != 0 and _field[_y-1][_x] == 0 and _field[_y][_x] != 0:
+                _field[_y-1][_x] = _field[_y][_x]
+                _field[_y][_x] = 0
+                _y =_y-1
+            else:
+                _y = _y+1
+        _x = _x + 1
+        _y = 0
+
+    # Вносим изменения в поле в интерфейсе
+    field_text.set(form_field(_field))
+    print(_field)        
 btnr = ttk.Button(text="RIGHT", command=click_button_right)
 btnl = ttk.Button(text="LEFT", command=click_button_left)
 btnu = ttk.Button(text="UP", command=click_button_up)
-
+btnd = ttk.Button(text="DOWN", command=click_button_down)
 
 btnr.pack(side='right')
 btnl.pack(side='left')
 btnu.pack(side='top')
+btnd.pack(side='bottom')
 
 label.pack()    # размещаем метку в окне
 label_field.pack(expand=True)
