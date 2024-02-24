@@ -24,14 +24,10 @@ print(field)
 
 root = Tk()     # создаем корневой объект - окно
 root.title("2024")     # устанавливаем заголовок окна
-root.geometry("500x600")    # устанавливаем размеры окна
+#root.geometry("500x600")    # устанавливаем размеры окна
 root.resizable(False, False) # нельзя менять размеры окна  
 icon = PhotoImage(file = "data/icon.png") # иконка игры
 root.iconphoto(False, icon)
-frame_matrix = ttk.Frame(padding=[2, 2])
-frame_buttom = ttk.Frame(padding=[2, 2])
-
-label = Label(text="Hello, it is 2024!") # создаем текстовую метку
 
 # Функция для отрисовки матрицы
 def form_field(field=field):
@@ -39,9 +35,6 @@ def form_field(field=field):
     for x in field:
         field_text = field_text + '\n' + str(x)
     return field_text
-    
-field_text = StringVar(value=form_field())
-label_field = Label(textvariable=field_text)
 
 # Функция для случайного изменения в матрице нулей на 2 или 4
 def new_number(field=field):
@@ -54,7 +47,6 @@ def new_number(field=field):
     print(f'Слчайное число: {random_zero[1]}')
     field[random_zero[0]][random_zero[1]] = random.choice([2,2,2,2,2,2,2,2,2,4,4,4,8])
     return field
-
 
 # Функция для суммирования и смещения цифр вправо
 def click_button_right(_field = field):
@@ -71,7 +63,6 @@ def click_button_right(_field = field):
                 _field[_y][_x] = _field[_y][_x] * 2
                 _field[_y][_x-1] = 0
                 _x = _x - 2
-                check_new_number = True
             else:
                 _x = _x - 1
         _y = _y + 1
@@ -86,6 +77,7 @@ def click_button_right(_field = field):
                 _field[_y][_x+1] = _field[_y][_x]
                 _field[_y][_x] = 0
                 _x =_x+1
+                check_new_number = True
             else:
                 _x = _x-1
         _y = _y + 1
@@ -113,7 +105,6 @@ def click_button_left(_field = field):
                 _field[_y][_x] = _field[_y][_x] * 2
                 _field[_y][_x+1] = 0
                 _x = _x + 2
-                check_new_number = True
             else:
                 _x = _x + 1
         _y = _y + 1
@@ -128,6 +119,7 @@ def click_button_left(_field = field):
                 _field[_y][_x-1] = _field[_y][_x]
                 _field[_y][_x] = 0
                 _x =_x-1
+                check_new_number = True
             else:
                 _x = _x+1
         _y = _y + 1
@@ -155,7 +147,6 @@ def click_button_up(_field = field):
                 _field[_y][_x] = _field[_y][_x] * 2
                 _field[_y+1][_x] = 0
                 _y = _y + 2
-                check_new_number = True
             else:
                 _y = _y + 1
         _x = _x + 1
@@ -170,6 +161,7 @@ def click_button_up(_field = field):
                 _field[_y-1][_x] = _field[_y][_x]
                 _field[_y][_x] = 0
                 _y =_y-1
+                check_new_number = True
             else:
                 _y = _y+1
         _x = _x + 1
@@ -197,7 +189,6 @@ def click_button_down(_field = field):
                 _field[_y][_x] = _field[_y][_x] * 2
                 _field[_y-1][_x] = 0
                 _y = _y - 2
-                check_new_number = True
             else:
                 _y = _y - 1
         _x = _x + 1
@@ -212,6 +203,7 @@ def click_button_down(_field = field):
                 _field[_y+1][_x] = _field[_y][_x]
                 _field[_y][_x] = 0
                 _y =_y+1
+                check_new_number = True
             else:
                 _y =_y-1
         _x = _x + 1
@@ -224,20 +216,34 @@ def click_button_down(_field = field):
     field_text.set(form_field(_field))
     print(_field)        
 
+# Контейнеры для матрицы и кнопок
+frame_matrix = ttk.Frame(padding=[2, 2])
+frame_buttom = ttk.Frame(width=50, padding=[2, 2])
+
+# Создаем текстовую метку, приветствие
+label = Label(text="Hello, it is 2024!") 
+label.pack()    # размещаем метку в окне
+
+# Создаем переменную, которая конвертируют матрицу(list) в StringVar
+field_text = StringVar(value=form_field())
+
+# Создаем слой с матрицой
+label_field = Label(frame_matrix, textvariable=field_text)
+frame_matrix.pack(anchor=S, fill=X, padx=5, pady=5)
+label_field.pack(expand=True) # размещаем матрицу в окне
+
 # Создаем кнопки для перемещения цифр
-btnr = ttk.Button(text="RIGHT", command=click_button_right)
-btnl = ttk.Button(text="LEFT", command=click_button_left)
-btnu = ttk.Button(text="UP", command=click_button_up)
-btnd = ttk.Button(text="DOWN", command=click_button_down)
+btnr = ttk.Button(frame_buttom, text="RIGHT", command=click_button_right)
+btnl = ttk.Button(frame_buttom, text="LEFT", command=click_button_left)
+btnu = ttk.Button(frame_buttom, text="UP", command=click_button_up)
+btnd = ttk.Button(frame_buttom, text="DOWN", command=click_button_down)
 
 # Рисуем кнопки на окне
+frame_buttom.pack(padx=5, pady=5)
 btnr.pack(side='right')
 btnl.pack(side='left')
 btnu.pack(side='top')
 btnd.pack(side='bottom')
 
-label.pack()    # размещаем метку в окне
-label_field.pack( expand=True)
-
- 
+# Запуск окна 
 root.mainloop()
