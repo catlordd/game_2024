@@ -2,26 +2,30 @@ from tkinter import *
 from tkinter import ttk
 import random
 
-# Функция для создания поля
-def create_field(i=4):
-    y = 0
-    field = []
-    while y < i:
-        field.append([])
-        x = 0
-        while x < i:
-            field[y].append(1)
-            x += 1
-        y += 1
-    return field
 
-        
-#field = create_field()
 field = [[2,0,0,0],
          [0,0,2,0],
          [0,2,0,0],
          [0,0,0,2]]
 print(field)
+
+# Функция для создания поля
+def create_field(i=4, field=field):
+    y = 0
+    field.clear()
+    while y < i:
+        field.append([])
+        x = 0
+        while x < i:
+            field[y].append(random.choice([0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,4]))
+            x += 1
+        y += 1
+    field_text.set(form_field())
+    print("START\n" + str(field))
+    
+
+
+#field = create_field()
 
 
 root = Tk()     # создаем корневой объект - окно
@@ -31,7 +35,7 @@ root.resizable(False, False) # нельзя менять размеры окна
 icon = PhotoImage(file = "data/icon.png") # иконка игры
 root.iconphoto(False, icon)
 
-#
+'''#
 y = 0
 str_matrix = []
 while y < 4:
@@ -54,7 +58,7 @@ while y < 4:
         x = x + 1
     y = y + 1
 
-frame_matrixx.pack(anchor=W)
+frame_matrixx.pack(anchor=W)'''
 
 # Функция для отрисовки матрицы
 def form_field(field=field):
@@ -252,6 +256,7 @@ def click_button_down(_field = field):
     print(_field)        
 
 # Контейнеры для матрицы и кнопок
+frame_start = ttk.Frame()
 frame_matrix = ttk.Frame()
 frame_buttom = ttk.Frame(padding=[2, 2])
 
@@ -259,8 +264,20 @@ frame_buttom = ttk.Frame(padding=[2, 2])
 label = Label(text="Hello, it is 2024!") 
 label.pack()    # размещаем метку в окне
 
+
 # Создаем переменную, которая конвертируют матрицу(list) в StringVar
 field_text = StringVar(value=form_field())
+
+# Список с выбором сложности игры
+languages = ['easy', 'normal', 'hard']
+combobox = ttk.Combobox(frame_start, values=languages)
+#
+btnstart = ttk.Button(frame_start, text="New game", command=create_field)
+# Рисуем контейнер для старта
+frame_start.pack()
+combobox.pack(side='left')
+btnstart.pack(side='right')
+
 
 # Создаем слой с матрицой
 label_field = Label(frame_matrix, relief=RIDGE, textvariable=field_text)
