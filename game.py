@@ -15,12 +15,14 @@ def create_field(i=4):
         y += 1
     return field
 
+        
 #field = create_field()
 field = [[2,0,0,0],
          [0,0,2,0],
          [0,2,0,0],
          [0,0,0,2]]
 print(field)
+
 
 root = Tk()     # создаем корневой объект - окно
 root.title("2024")     # устанавливаем заголовок окна
@@ -29,14 +31,44 @@ root.resizable(False, False) # нельзя менять размеры окна
 icon = PhotoImage(file = "data/icon.png") # иконка игры
 root.iconphoto(False, icon)
 
+#
+y = 0
+str_matrix = []
+while y < 4:
+    str_matrix.append([])
+    x = 0
+    while x < 4:
+        str_matrix[y].append(StringVar(value=field[y][x]))
+        x = x + 1
+    y = y + 1
+#
+frame_matrixx = Frame( relief=RIDGE)
+y = 0
+label_matrix = []
+while y < 4:
+    label_matrix.append([])
+    x = 0
+    while x < 4:
+        label_matrix[y].append(Label(frame_matrixx, width=5, relief=RIDGE,textvariable = str_matrix[y][x]))
+        label_matrix[y][x].pack(anchor=W)
+        x = x + 1
+    y = y + 1
+
+frame_matrixx.pack(anchor=W)
+
 # Функция для отрисовки матрицы
 def form_field(field=field):
     field_text = ""
-    for x in field:
+    for y in field:
+        y_string = ""
+        for x in y:
+            y_string = y_string + " "*(4-len(str(x))) + str(x) +"  "
+
         if field_text=="":
-            field_text = str(x)
+            field_text = str(y_string)
         else:
-            field_text= field_text + '\n' + str(x)
+            field_text= field_text + '\n' + str(y_string)
+            
     return field_text
 
 # Функция для случайного изменения в матрице нулей на 2 или 4
@@ -231,7 +263,7 @@ label.pack()    # размещаем метку в окне
 field_text = StringVar(value=form_field())
 
 # Создаем слой с матрицой
-label_field = Label(frame_matrix, height=5, width=10, relief=RIDGE, textvariable=field_text)
+label_field = Label(frame_matrix, relief=RIDGE, textvariable=field_text)
 # Рисуем контейнер для матрицы
 frame_matrix.pack()
 # Рисуем матрицу в контейнере
