@@ -3,10 +3,7 @@ from tkinter import ttk
 import random
 
 
-field = [[2,0,0,0],
-         [0,0,2,0],
-         [0,2,0,0],
-         [0,0,0,2]]
+field = []
 print(field)
 
 # Функция для создания поля
@@ -22,11 +19,8 @@ def create_field(i=4, field=field):
         y += 1
     field_text.set(form_field())
     print("START\n" + str(field))
-    
-
 
 #field = create_field()
-
 
 root = Tk()     # создаем корневой объект - окно
 root.title("2024")     # устанавливаем заголовок окна
@@ -269,10 +263,14 @@ label.pack()    # размещаем метку в окне
 field_text = StringVar(value=form_field())
 
 # Список с выбором сложности игры
-languages = ['easy', 'normal', 'hard']
-combobox = ttk.Combobox(frame_start, values=languages)
+diff = {'easy':6, 'normal':5, 'hard':4}
+select_diff = StringVar(value=list(diff.keys())[0])
+combobox = ttk.Combobox(frame_start, textvariable=select_diff, values=list(diff.keys()), state="readonly")
+
+def create_fieldd():
+    create_field(i = select_diff.get())
 #
-btnstart = ttk.Button(frame_start, text="New game", command=create_field)
+btnstart = ttk.Button(frame_start, text="New game", command=create_fieldd)
 # Рисуем контейнер для старта
 frame_start.pack()
 combobox.pack(side='left')
