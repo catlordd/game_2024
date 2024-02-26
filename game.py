@@ -6,7 +6,7 @@ import random
 field = []
 
 root = Tk()     # создаем корневой объект - окно
-root.title("2024")     # устанавливаем заголовок окна
+root.title("2048")     # устанавливаем заголовок окна
 #root.geometry("500x600")    # устанавливаем размеры окна
 root.resizable(False, False) # нельзя менять размеры окна  
 icon = PhotoImage(file = "data/icon.png") # иконка игры
